@@ -11,13 +11,13 @@ class CompleterProgress {
     steps.add(step);
   }
 
-  void complete() {
+  void markAsCompleted() {
     steps.add(maxValue);
   }
 
-  bool get hasCompleted => fraction == 1.0;
+  bool get hasCompleted => asFraction == 1.0;
 
-  double get fraction {
+  double get asFraction {
     double sum = steps.fold(0.0, (x, y) => x + y);
     if (sum > maxValue) sum = maxValue.toDouble();
     return sum / maxValue;

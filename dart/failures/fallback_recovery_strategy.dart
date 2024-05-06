@@ -8,7 +8,7 @@ class FallbackRecoveryStrategy extends RecoveryStrategy {
   });
 
   @override
-  Future<bool> recover(bool Function() action) async {
+  Future<bool> recover(Future<bool> Function() action) async {
     fallback();
     return false;
   }

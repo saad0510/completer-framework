@@ -2,6 +2,7 @@ import 'dart:async';
 
 import '../completer/completer_facade.dart';
 import '../events/event_listener.dart';
+import '../failures/retry_recovery_strategy.dart';
 import '../state/states.dart';
 
 Future<void> sleep(int seconds) {
@@ -20,19 +21,23 @@ class PeriodicCounter extends CompleterFacade<int> {
       setValue(value + 1);
       progress.addStep(value);
 
-      print('$value: ${progress.fraction}');
+      print('$value: ${progress.asFraction}');
       await sleep(1);
     }
   }
 
   @override
   void onCompleted(data) {
-    print('completed: ${data}, progress ${progress.fraction}');
+    print('completed: ${data}, progress ${progress.asFraction}');
   }
 }
 
 void main() async {
-  final completer = PeriodicCounter();
+  final completer = PeriodicCounter()
+    ..recoveryStrategy = RetryRecoveryStrategy(
+      maxRetries: 3,
+      delayInMilliseconds: 1000,
+    );
 
   EventListener(
     completer,

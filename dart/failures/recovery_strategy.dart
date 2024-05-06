@@ -1,5 +1,5 @@
 abstract class RecoveryStrategy {
   const RecoveryStrategy();
 
-  Future<bool> recover(bool Function() action);
+  Future<bool> recover(Future<bool> Function() action);
 }

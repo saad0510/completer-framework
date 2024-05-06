@@ -20,8 +20,8 @@ abstract class CompleterFacade<T> extends Completer {
 
   void onPaused() {}
   void onResumed() {}
-  void onExit() {}
-  void onError() {}
+  void onExited() {}
+  void onError(Failure? failure) {}
   void onCompleted(T data) {}
 
   @override
@@ -31,8 +31,8 @@ abstract class CompleterFacade<T> extends Completer {
 
     if (state is CompleterPausedState) onPaused();
     if (state is CompleterResumedState) onResumed();
-    if (state is CompleterExitedState) onExit();
-    if (state is CompleterFailedState) onError();
+    if (state is CompleterExitedState) onExited();
+    if (state is CompleterFailedState) onError(state.error);
     if (state is CompleterCompletedState) onCompleted(state.data);
   }
 }

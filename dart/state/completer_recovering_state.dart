@@ -2,8 +2,8 @@ import '../completer/completer.dart';
 import '../failures/failure.dart';
 import 'states.dart';
 
-class CompleterRecoveringsState extends CompleterState {
-  const CompleterRecoveringsState();
+class CompleterRecoveringsState extends CompleterFailedState {
+  const CompleterRecoveringsState({super.error});
 
   @override
   void recover(Completer completer) async {
@@ -22,9 +22,9 @@ class CompleterRecoveringsState extends CompleterState {
     completer.setState(const CompleterAbortedState());
   }
 
-  bool recoverAction(Completer completer) {
+  Future<bool> recoverAction(Completer completer) async {
     try {
-      completer.task();
+      await completer.task();
       return true;
     } catch (e) {
       return false;

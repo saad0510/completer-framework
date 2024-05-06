@@ -16,7 +16,7 @@ class CompleterExecutingState extends CompleterState {
 
   @override
   void complete<T>(Completer completer, T data) {
-    completer.progress.complete();
+    completer.progress.markAsCompleted();
     completer.setState(CompleterCompletedState(data: data));
   }
 
